@@ -7,7 +7,6 @@ const uuid = require("uuid");
 const PORT = process.env.PORT || 3001;
 
 
-
 //Could be in its own file and folder to have less code in server.js
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
@@ -18,7 +17,7 @@ app.use(express.json());
 app.get("/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
-app.get("/", function(req, res) {
+app.get("*", function(req, res) {
     res.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
