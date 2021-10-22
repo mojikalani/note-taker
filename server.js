@@ -6,23 +6,17 @@ const uuid = require("uuid");
 
 const PORT = process.env.PORT || 3001;
 
-
-
-//Could be in its own file and folder to have less code in server.js
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
-//Routes (Could be in its own file)
 app.get("/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
-app.get("/", function(req, res) {
+app.get("*", function(req, res) {
     res.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
-//Display
 app.get("/api/notes", (req, res) => {
     fs.readFile(path.join(__dirname, "./db/db.json"), (err, data) => {
         if (err) throw err;
@@ -31,7 +25,6 @@ app.get("/api/notes", (req, res) => {
     })
 });
 
-//New Note
 app.post("/api/notes", function(req, res) {
     fs.readFile(path.join(__dirname, "./db/db.json"), (err, data) => {
         if (err) throw err;
@@ -47,9 +40,6 @@ app.post("/api/notes", function(req, res) {
         res.json(newNote);
     });
 });
-
-
-
 
 app.listen(PORT, function() {
     console.log(`App listening to ${PORT}`);
